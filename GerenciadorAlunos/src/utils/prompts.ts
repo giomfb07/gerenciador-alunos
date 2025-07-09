@@ -1,12 +1,12 @@
 import inquirer from 'inquirer';
 import { IAluno } from '../interface/IAlunos';
 
-export async function promptParaDetalhesDoAluno(): Promise<IAluno> {
+export async function promptDetalhes(): Promise<IAluno> {
   const respostas = await inquirer.prompt([
     {
       type: 'input',
       name: 'matricula',
-      message: 'Digite a matrícula do aluno:',
+      message: 'Digite a matrícula:',
       validate: input => input.trim() !== '' ? true : 'A matrícula não pode ser vazia.'
     },
     {
@@ -17,7 +17,7 @@ export async function promptParaDetalhesDoAluno(): Promise<IAluno> {
     {
       type: 'number',
       name: 'idade',
-      message: 'Digite a idade do aluno:',
+      message: 'Digite a idade:',
       validate: input => input > 0 ? true : 'A idade deve ser um número positivo.'
     }
   ]);
@@ -29,13 +29,13 @@ export async function promptParaDetalhesDoAluno(): Promise<IAluno> {
   };
 }
 
-export async function promptMenuPrincipal(): Promise<string> {
+export async function promptMenu(): Promise<string> {
   const resposta = await inquirer.prompt([
     {
       type: 'list',
       name: 'opcao',
       message: 'Escolha uma opção:',
-      choices: ['Adicionar Aluno', 'Listar Alunos', 'Sair']
+      choices: ['Adicionar', 'Listar', 'Editar','Deletar', 'Sair']
     }
   ]);
 

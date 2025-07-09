@@ -1,24 +1,37 @@
 import { AlunoManager } from './managers/AlunoManager';
-import { promptMenuPrincipal, promptParaDetalhesDoAluno } from './utils/prompts';
+import { promptMenu, promptDetalhes } from './utils/prompts';
 
 async function main() {
-  const alunoManager = new AlunoManager();
+  const manager = new AlunoManager();
+  let sair = false;
 
-  let continuar = true;
+  while (!sair) {
+    const opcao = await promptMenu();
 
-  while (continuar) {
-    const escolha = await promptMenuPrincipal();
-
-    switch (escolha) {
-      case 'Adicionar Aluno':
-        const novoAluno = await promptParaDetalhesDoAluno();
-        alunoManager.adicionarAluno(novoAluno);
+    switch (opcao) {
+      case 'Adicionar':
+        const novoAluno = await promptDetalhes();
+        manager.adicionarAluno(novoAluno);
         break;
-      case 'Listar Alunos':
-        alunoManager.listarAlunos();
+
+      case 'Listar':
+        manager.listarAlunos();
         break;
+
+      case 'Editar':
+        const alunoBusca = await promptDetalhes();
+        console.log(alunoBusca)
+        manager.editarAluno(alunoBusca);
+        break;
+      
+        case 'Deletar':
+          const deletarAluno = await promptDetalhes();
+          console.log(deletarAluno)
+          manager.deletarAluno(deletarAluno);
+          break;
+
       case 'Sair':
-        continuar = false;
+        sair = true;
         console.log('Encerrando o programa...');
         break;
     }
